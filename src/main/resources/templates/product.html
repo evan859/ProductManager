@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+ 
+    <title>Fast Track Product Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+ 
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    
+    <link href="../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet"/>
+</head>
+<body style="background-color: lightgray">
+
+<nav class="navbar navbar-light" style="background-color: #32332e">
+  	<h2 style="color: white">Fast Track - Product Manager</h2>
+</nav>
+
+<br/>
+<br/>
+
+
+<div class="container padding-top-md">
+	<div class="row align-self-center" style="vertical-align: middle">
+		<div class="col-3">
+			<form id="csvImport" action="product" method="POST" enctype="multipart/form-data">
+				<label for="file">Import CSV</label>
+			    <input id="file-input" type="file" name="file" />				
+			    <p><button class="btn btn-success border border-secondary" type="submit">Upload to DB</button></p>
+			    <p><div th:text="${message}"></div></p>
+			    <ul class="list-group border-secondary">
+			    	<li class="list-group-item list-group-item-success" style="font-weight: bold">Summary Statistics</li>
+			    	<li class="list-group-item" style="background-color: #e5e5e5; font-size: 13px">SKU Count: <span th:text="${SKUCount}" /></li>
+			    	<li class="list-group-item" style="background-color: #e5e5e5; font-size: 13px">Last Import: <span th:text="${lastImport}" /></li>
+			    </ul> 
+			</form>
+		</div>
+		
+		<div class="col-9">
+			<form id="searchupc" action="UPC" method="POST" enctype="multipart/form-data">
+				<div class="input-group mb-3">
+  					<div class="input-group-prepend">
+    					<button class="btn btn-default border border-secondary" type="submit">Search for UPC</button>
+  					</div>
+  					<input id="upcsearch" type="text" name="upcsearch" />
+				</div>
+			    
+			    <p><div th:text="${today}"></div></p>   
+			    <table class="table table-striped">
+			    	<thead>
+			                <tr>
+			                    <th>UPC</th>
+			                    <th>Return Quantity</th>
+			                    <th>Seller</th>
+			                    <th>Item Brand</th>
+			                    <th>To Do</th>
+			                    <th>Search Date</th>
+			                </tr>
+			        </thead>
+			        <tbody>
+			                <tr th:each="psh: ${SearchHistory}">
+			                    <td th:text="${psh.UPC}" style="font-size: 13px"></td>
+			                    <td th:text="${psh.returnQuantity}" style="font-size: 13px; text-align: center"></td>
+			                    <td th:text="${psh.seller}" style="font-size: 13px"></td>
+			                    <td th:text="${psh.itemBrand}" style="font-size: 13px"></td>
+			                    <td th:text="${psh.toDo}" style="font-size: 13px"></td>
+			                    <td th:text="${psh.searchDate}" style="font-size: 13px"></td>
+			                </tr>
+			        </tbody>
+			     </table>
+			</form>
+			
+				<form id="csvDownload" action="downloadCSV" method="GET" enctype="multipart/form-data">
+				   	<input class="btn btn-success btn-sm border border-secondary" id="csvExport" type="submit" value="Download Product Search History CSV" />
+				</form>
+				
+				<form id="csvExportToFTP" action="exportCSV" method="GET" enctype="multipart/form-data">
+				   	<input class="btn btn-success btn-sm border border-secondary" id="csvExport" type="submit" value="Export Search History CSV to FTP" />
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
