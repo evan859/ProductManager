@@ -115,22 +115,10 @@ public class ProductController {
 	    return mav;     	        
 	}
 	
-	@RequestMapping(value="/exportCSV", method=RequestMethod.GET)
-	public void exportFile(HttpServletResponse response) throws IOException,
-												CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+	@RequestMapping(value="/exportCSV", method=RequestMethod.POST)
+	public void exportFile()  {
 
-	    List<ProductSearchHistory> pshList = pshRepo.findBySearchDate(LocalDate.now());
-	    
-	    String exportName = "ProductSearchHistory" + LocalDate.now().toString();
-	    
-	    String csv = ProductSearchHistoryCSVWriter.WriteProductSearchHistoryCSV(pshList);  
-	    
-	    response.setContentType("text/plain");
-	    response.setHeader("Content-Disposition", "attachment);filename=" + exportName);
-	    ServletOutputStream sos = response.getOutputStream();
-	    sos.println(csv);
-	    sos.flush();
-	    sos.close();
+	    // not implemented
 	}
 	
 	@RequestMapping(value="/downloadCSV", method=RequestMethod.GET)
