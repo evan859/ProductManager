@@ -107,19 +107,14 @@ public class ProductController {
 	        message = "No Data Found";
 	    }
 		
-		mav.addObject("SKUCount", repo.findAll().size());
-		mav.addObject("lastImport", repo.findTop1ByOrderByImportDateDesc().getImportDate());
+	    mav.addObject("SKUCount", repo.findAll().size());
+	    mav.addObject("lastImport", repo.findTop1ByOrderByImportDateDesc().getImportDate());
 	    mav.addObject("message", message);
 	    mav.setViewName("product");
 	        
 	    return mav;     	        
 	}
 	
-	@RequestMapping(value="/exportCSV", method=RequestMethod.POST)
-	public void exportFile()  {
-
-	    // not implemented
-	}
 	
 	@RequestMapping(value="/downloadCSV", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> downloadFile() throws IOException  {
